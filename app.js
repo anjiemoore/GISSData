@@ -8,7 +8,10 @@ async function getData() {
         table.forEach(row => {
             const columns = row.split(',');
             const year = columns[0];
-            const temp = columns[1];
-            console.log(year, temp);
+            const nhTemp = columns[1];
+            const shTemp = columns[2];
+            console.log(year, nhTemp, shTemp);
         });
+
+        
 }
