@@ -1,4 +1,6 @@
-const xAxis = [];
+const xYears = [];
+const yNhtemps = [];
+const yShtemps = [];
 
 chartCreation();
 
@@ -10,10 +12,11 @@ async function getData() {
         table.forEach(row => {
             const columns = row.split(',');
             const year = columns[0];
-            xAxis.push(year);
+            xYears.push(year);
             const nhTemp = columns[1];
+            yNhtemps.push(parseFloat(nhTemp) + 14);
             const shTemp = columns[2];
-            console.log(year, nhTemp, shTemp);
+            yShtemps.push(parseFloat(shTemp) + 14);
         });
 };
 
@@ -23,20 +26,39 @@ async function chartCreation() {
 
 const chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'bar',
+    type: 'line',
 
     // The data for our dataset
     data: {
-        labels: xAxis,
-        datasets: [{
-            label: 'Global Average Temperature',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45]
-        }]
+    labels: xYears,
+    datasets: [{
+        fill: false,
+        borderColor: 'rgb(0, 174, 255)',
+        label: 'Northern Hemisphere',
+        yAxisID: 'NH',
+        data: yNhtemps
+    }, {
+        fill: false,
+        label: 'Southern Hemisphere',
+        borderColor: 'rgb(255, 110, 0)',
+        yAxisID: 'SH',
+        data: yShtemps
+    }]
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+        scales: {
+          yAxes: [{
+            id: 'NH',
+            type: 'linear',
+            position: 'left',
+          }, {
+            id: 'SH',
+            type: 'linear',
+            position: 'right',
+          }]
+        }
+      }
 });
 }
