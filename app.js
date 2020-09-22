@@ -48,7 +48,6 @@ async function chartCreation() {
                 label: 'Southern Hemisphere',
                 borderColor: 'rgb(166, 83, 107)',
                 borderWidth: '1.5',
-                yAxisID: 'SH',
                 data: data.yShtemps
             }, {
                 fill: false,
@@ -68,15 +67,6 @@ async function chartCreation() {
                     id: 'GL',
                     type: 'linear',
                     position: 'left',
-                    ticks: {
-                        callback: function(value, index, values) {
-                            return value + "°C";
-                        }
-                    }
-                }, {
-                    id: 'SH',
-                    type: 'linear',
-                    position: 'right',
                     ticks: {
                         callback: function(value, index, values) {
                             return value + "°C";
