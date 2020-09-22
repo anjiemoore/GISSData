@@ -2,6 +2,7 @@ chartCreation();
 
 async function getData() {
     const xYears = [];
+    const yGlobal = [];
     const yNhtemps = [];
     const yShtemps = [];
     
@@ -13,13 +14,15 @@ async function getData() {
         const columns = row.split(',');
         const year = columns[0];
         xYears.push(year);
-        const nhTemp = columns[1];
+        const glob = columns[1];
+        yGlobal.push(parseFloat(glob) +14);
+        const nhTemp = columns[2];
         yNhtemps.push(parseFloat(nhTemp) + 14);
-        const shTemp = columns[2];
+        const shTemp = columns[3];
         yShtemps.push(parseFloat(shTemp) + 14);
     });
 
-    return { xYears, yNhtemps, yShtemps }
+    return { xYears, yGlobal, yNhtemps, yShtemps }
 };
 
 async function chartCreation() {
@@ -35,16 +38,24 @@ async function chartCreation() {
             labels: data.xYears,
             datasets: [{
                 fill: false,
-                borderColor: 'rgb(52, 127, 196)',
-                label: 'Northern Hemisphere',
-                yAxisID: 'NH',
-                data: data.yNhtemps
+                borderColor: 'rgb(85, 132, 0)',
+                borderWidth: '1.5',
+                label: 'Global',
+                yAxisID: 'GL',
+                data: data.yGlobal
             }, {
                 fill: false,
                 label: 'Southern Hemisphere',
                 borderColor: 'rgb(166, 83, 107)',
+                borderWidth: '1.5',
                 yAxisID: 'SH',
                 data: data.yShtemps
+            }, {
+                fill: false,
+                borderColor: 'rgb(52, 127, 196)',
+                borderWidth: '1.5',
+                label: 'Northern Hemisphere',
+                data: data.yNhtemps
             }]
         },
 
@@ -54,7 +65,7 @@ async function chartCreation() {
             maintainAspectRatio: false,
             scales: {
                 yAxes: [{
-                    id: 'NH',
+                    id: 'GL',
                     type: 'linear',
                     position: 'left',
                     ticks: {
